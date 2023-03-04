@@ -35,24 +35,30 @@
         android:textColor="#8cefb6"
         android:fontFamily="@font/Pixelemulator"
         android:backgroundTint="#474476"
-        android:onClick="startGame" />
+        android:drawableLeft="@drawable/spaceship"
+        android:layout_marginBottom="16dp"
+    android:onClick="startGame" />
 
     <Button
-        android:layout_width="175dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:text="Change Skin"
+        android:textSize="16sp"
         android:textColor="#8cefb6"
         android:fontFamily="@font/Pixelemulator"
         android:backgroundTint="#474476"
+        android:drawableLeft="@drawable/skin"
         android:onClick="changeSkin" />
 
     <Button
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:text="Options"
+        android:textSize="16sp"
         android:textColor="#8cefb6"
         android:fontFamily="@font/Pixelemulator"
         android:backgroundTint="#474476"
+        android:drawableLeft="@drawable/settings"
         android:onClick="options" />
 
 
