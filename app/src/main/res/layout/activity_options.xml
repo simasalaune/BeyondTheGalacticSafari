@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-
+    tools:context=".OptionsActivity"
     android:orientation="vertical"
     android:background="#372134"
     android:gravity="center">
@@ -15,52 +14,56 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/extrude"
-        android:text="Beyond\nthe Galactic Safari"
+        android:text="Options"
         android:textAlignment="center"
         android:textColor="#8cefb6"
-        android:textSize="50sp" />
+        android:textSize="65sp" />
 
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:srcCompat="@drawable/ufo"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="200dp"
-        android:layout_height="65dp"
-        android:text="Start"
-        android:textSize="37sp"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
-        android:backgroundTint="#474476"
-        android:drawableLeft="@drawable/spaceship"
-        android:layout_marginBottom="16dp"
-    android:onClick="startGame" />
-
-    <Button
-        android:layout_width="220dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Skin"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/upheavtt"
+        android:text="Difficulty"
+        android:textAlignment="center"
+        android:textColor="#8cefb6"
+        android:textSize="35sp" />
+
+    <Button
+        android:id="@+id/difficulty_button"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Easy"
         android:textSize="20sp"
         android:textColor="#8cefb6"
         android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
-        android:drawableLeft="@drawable/skin"
-        android:onClick="changeSkin" />
+        android:drawableLeft="@drawable/easy"/>
 
     <Button
-        android:layout_width="175dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/sound_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Options"
+        android:text="Sound On"
         android:textSize="20sp"
         android:textColor="#8cefb6"
         android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
-        android:drawableLeft="@drawable/settings"
-        android:onClick="openOptions" />
+        android:drawableLeft="@drawable/yessound"/>
 
+
+    <Button
+        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:textSize="25sp"
+        android:textColor="#8cefb6"
+        android:fontFamily="@font/upheavtt"
+        android:backgroundTint="#474476"
+        android:drawableLeft="@drawable/back"
+        android:onClick="back" />
 
 </LinearLayout>

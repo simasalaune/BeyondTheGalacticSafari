@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+
 public class MainActivity extends AppCompatActivity {
 
     Button start;
@@ -28,5 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void openOptions(View view) {
+        Intent intent = new Intent(this, OptionsActivity.class);
+        startActivity(intent);
     }
 }
