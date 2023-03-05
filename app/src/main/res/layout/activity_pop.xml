@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Main menu"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/pixelemulator"
+        android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
          />
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Options"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/pixelemulator"
+        android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         />
 
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="Resume"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/pixelemulator"
+        android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         />
 </LinearLayout>

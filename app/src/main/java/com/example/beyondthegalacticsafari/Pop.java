@@ -43,7 +43,7 @@ public class Pop extends Activity {
         optionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                Intent intent = new Intent(getBaseContext(), OptionsActivity.class);
                 startActivity(intent);
             }
         });
