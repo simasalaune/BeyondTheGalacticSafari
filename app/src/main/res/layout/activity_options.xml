@@ -17,41 +17,53 @@
         android:text="Options"
         android:textAlignment="center"
         android:textColor="#8cefb6"
-        android:textSize="50sp" />
+        android:textSize="65sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/upheavtt"
+        android:text="Difficulty"
+        android:textAlignment="center"
+        android:textColor="#8cefb6"
+        android:textSize="35sp" />
 
     <Button
-        android:layout_width="220dp"
+        android:id="@+id/difficulty_button"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
-        android:textSize="16sp"
+        android:text="Easy"
+        android:textSize="20sp"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/pixelemulator"
+        android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
-        android:drawableLeft="@drawable/spaceship"
-        android:onClick="startGame" />
+        android:drawableLeft="@drawable/easy"/>
 
     <Button
-        android:layout_width="220dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/sound_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Skin"
-        android:textSize="16sp"
+        android:text="Sound On"
+        android:textSize="20sp"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/pixelemulator"
+        android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
-        android:drawableLeft="@drawable/skin"
-        android:onClick="changeSkin" />
+        android:drawableLeft="@drawable/yessound"/>
+
 
     <Button
         android:layout_marginTop="100dp"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:textSize="16sp"
+        android:textSize="25sp"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/pixelemulator"
+        android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/back"
-        android:onClick="options" />
+        android:onClick="back" />
 
 </LinearLayout>
