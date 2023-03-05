@@ -14,7 +14,7 @@
         android:layout_width="335dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/Extrude"
+        android:fontFamily="@font/extrude"
         android:text="Beyond\nthe Galactic Safari"
         android:textAlignment="center"
         android:textColor="#8cefb6"
@@ -28,12 +28,13 @@
         android:layout_marginBottom="40dp"/>
 
     <Button
+        android:id="@+id/button"
         android:layout_width="200dp"
         android:layout_height="65dp"
         android:text="Start"
         android:textSize="32sp"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/Pixelemulator"
+        android:fontFamily="@font/pixelemulator"
         android:backgroundTint="#474476"
         android:onClick="startGame" />
 
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Change Skin"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/Pixelemulator"
+        android:fontFamily="@font/pixelemulator"
         android:backgroundTint="#474476"
         android:onClick="changeSkin" />
 
@@ -51,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="Options"
         android:textColor="#8cefb6"
-        android:fontFamily="@font/Pixelemulator"
+        android:fontFamily="@font/pixelemulator"
         android:backgroundTint="#474476"
         android:onClick="options" />
 

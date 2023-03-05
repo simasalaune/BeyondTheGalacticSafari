@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameScreen">
+
+    <ImageView
+        android:id="@+id/background_one"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/game_background" />
+
+    <ImageView
+        android:id="@+id/background_two"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/game_background"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="88dp"
+        android:layout_height="84dp"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="628dp"
+        app:layout_constraintBottom_toBottomOf="@+id/background_two"
+        app:layout_constraintEnd_toEndOf="@+id/background_one"
+        app:layout_constraintStart_toStartOf="@+id/background_two"
+        app:layout_constraintTop_toTopOf="@+id/background_one"
+        app:srcCompat="@drawable/settings_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
