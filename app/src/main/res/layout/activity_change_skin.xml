@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OptionsActivity"
+    android:orientation="vertical"
+    android:background="#372134"
+    android:gravity="center">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/extrude"
+        android:text="Skin Room"
+        android:textAlignment="center"
+        android:textColor="#8cefb6"
+        android:textSize="65sp" />
+
+    <ImageView
+        android:id="@+id/skins"
+        android:layout_width="339dp"
+        android:layout_height="193dp"
+        app:srcCompat="@drawable/main_ship___base___full_health" />
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="#474476"
+        android:drawableLeft="@drawable/skin"
+        android:fontFamily="@font/upheavtt"
+        android:onClick="back"
+        android:text="Next"
+        android:textColor="#8cefb6"
+        android:textSize="25sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="#474476"
+        android:drawableLeft="@drawable/back"
+        android:fontFamily="@font/upheavtt"
+        android:onClick="back"
+        android:text="Back"
+        android:textColor="#8cefb6"
+        android:textSize="25sp" />
+
+</LinearLayout>
