@@ -20,8 +20,12 @@
             android:exported="false"
             />
         <activity
+            android:name=".SkinRoom"
+            android:exported="false" />
+        <activity
             android:name=".OptionsActivity"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

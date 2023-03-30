@@ -55,15 +55,15 @@
 
 
     <Button
-        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
-        android:textSize="25sp"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
+        android:layout_marginTop="100dp"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/back"
-        android:onClick="back" />
+        android:fontFamily="@font/upheavtt"
+        android:onClick="back"
+        android:text="Back"
+        android:textColor="#8cefb6"
+        android:textSize="25sp" />
 
 </LinearLayout>

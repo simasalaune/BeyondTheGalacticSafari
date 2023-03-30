@@ -43,13 +43,13 @@
     <Button
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:text="Change Skin"
-        android:textSize="20sp"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/skin"
-        android:onClick="changeSkin" />
+        android:fontFamily="@font/upheavtt"
+        android:onClick="openSkinRoom"
+        android:text="Change Skin"
+        android:textColor="#8cefb6"
+        android:textSize="20sp" />
 
     <Button
         android:layout_width="175dp"
