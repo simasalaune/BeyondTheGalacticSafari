@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".OptionsActivity"
     android:orientation="vertical"
-    android:background="#372134"
+    android:background="@drawable/galaxy"
     android:gravity="center">
 
     <TextView
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="Easy"
         android:textSize="20sp"
-        android:textColor="#8cefb6"
+        android:textColor="#8ff8e2"
         android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/easy"/>
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="Sound On"
         android:textSize="20sp"
-        android:textColor="#8cefb6"
+        android:textColor="#8ff8e2"
         android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/yessound"/>
@@ -63,7 +63,7 @@
         android:fontFamily="@font/upheavtt"
         android:onClick="back"
         android:text="Back"
-        android:textColor="#8cefb6"
+        android:textColor="#8ff8e2"
         android:textSize="25sp" />
 
 </LinearLayout>

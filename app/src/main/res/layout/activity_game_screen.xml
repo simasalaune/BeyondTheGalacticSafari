@@ -11,16 +11,18 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/game_background" />
+        android:src="@drawable/galaxy"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/background_two"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/game_background"
+        android:src="@drawable/galaxy"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/imageButton3"
