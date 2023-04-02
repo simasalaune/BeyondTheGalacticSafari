@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GameOVer"
+    android:background="#372134"
+    android:gravity="center">>
+
+    <TextView
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/extrude"
+        android:text="Game\Over"
+        android:textAlignment="center"
+        android:textColor="#8cefb6"
+        android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:text="Restart"
+        android:textColor="#8cefb6"
+        android:fontFamily="@font/upheavtt"
+        android:backgroundTint="#474476"
+        />
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:text="Main menu"
+        android:textColor="#8cefb6"
+        android:fontFamily="@font/upheavtt"
+        android:backgroundTint="#474476"
+        />
+
+
+
+</LinearLayout>
