@@ -30,7 +30,7 @@ public class Pop extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.5));
+        getWindow().setLayout((int)(width*.8),(int)(height*.4));
 
         menuButton = (Button) findViewById(R.id.button2);
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -40,22 +40,22 @@ public class Pop extends Activity {
                 startActivity(intent);
             }
         });
-
-        optionsButton = (Button) findViewById(R.id.button3);
-        optionsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OptionsActivity.class);
-                startActivity(intent);
-            }
-        });
+//
+//        optionsButton = (Button) findViewById(R.id.button3);
+//        optionsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onPause();
+//                Intent intent = new Intent(getBaseContext(), OptionsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         resumeButton = (Button) findViewById(R.id.button4);
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), GameView.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

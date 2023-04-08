@@ -1,6 +1,8 @@
 package com.example.beyondthegalacticsafari;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ public class SkinRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_skin);
         Button nextButton = findViewById(R.id.next_button);
+        //Default skin
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,20 +36,21 @@ public class SkinRoom extends AppCompatActivity {
             case 1:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
+
                 skin.setImageResource(R.drawable.shipone);
-                // TODO:
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shipone);
                 break;
             case 2:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
                 skin.setImageResource(R.drawable.shiptwo);
-                // TODO:
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shiptwo);
                 break;
             case 3:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
                 skin.setImageResource(R.drawable.shipthree);
-                // TODO:
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shipthree);
                 break;
         }
     }

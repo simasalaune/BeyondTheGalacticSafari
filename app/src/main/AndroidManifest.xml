@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BeyondTheGalacticSafari"
         tools:targetApi="31">
         <activity
+            android:name=".GameActivity"
+            android:exported="false" />
+        <activity
             android:name=".GameOVer"
             android:exported="false" />
         <activity

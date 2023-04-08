@@ -11,33 +11,31 @@
 
     <TextView
         android:layout_width="335dp"
-        android:layout_height="wrap_content"
+        android:layout_height="89dp"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/extrude"
-        android:text="Game\Over"
+        android:text="Game Over"
         android:textAlignment="center"
         android:textColor="#8cefb6"
-        android:textSize="50sp" />
+        android:textSize="60sp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:text="Restart"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
+        android:layout_height="78dp"
+        android:textSize="28sp"
         android:backgroundTint="#474476"
-        />
+        android:fontFamily="@font/upheavtt"
+        android:text="Restart"
+        android:textColor="#8cefb6" />
+
     <Button
         android:id="@+id/button3"
         android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:text="Main menu"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
+        android:layout_height="78dp"
+        android:textSize="28sp"
         android:backgroundTint="#474476"
-        />
-
-
-
+        android:fontFamily="@font/upheavtt"
+        android:text="Main menu"
+        android:textColor="#8cefb6" />
 </LinearLayout>
