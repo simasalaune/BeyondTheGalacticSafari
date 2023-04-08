@@ -18,7 +18,7 @@ public class GameView extends SurfaceView implements Runnable {
     private boolean isPlaying, isGameOver = false;
     private int  oldX,oldShipX;
     public static int screenX, screenY;
-    public static float screenRatioX, screenRatioY;
+    public static float ScreenRatio, screenRatioInvert;
     private  Background background1, background2;
     private Paint paint;
     private Ship ship;
@@ -32,8 +32,9 @@ public class GameView extends SurfaceView implements Runnable {
         this.context = context;
         this.screenX = screenX;
         this.screenY = screenY;
-        screenRatioX = 1440f / screenX;
-        screenRatioY = 3120f / screenY;
+
+        ScreenRatio = screenX/screenY;
+        screenRatioInvert = screenY/screenX;
 
         background1 = new Background(screenX, screenY, getResources());
         background2 = new Background(screenX, screenY, getResources());
@@ -64,24 +65,24 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
 
-        background1.y -= 20;
-        background2.y -= 20;
+        background1.y += 20 * screenRatioInvert;
+        background2.y += 20 * screenRatioInvert;
 
-        if (background1.y + background1.background.getHeight() < 0) {
-            background1.y = screenY;
+        if (background1.y + background1.background.getHeight() > screenY+background1.background.getHeight()) {
+            background1.y = -screenY;
         }
 
-        if (background2.y + background2.background.getHeight() < 0) {
-            background2.y = screenY;
+        if (background2.y + background2.background.getHeight() > screenY+background1.background.getHeight()) {
+            background2.y = -screenY;
         }
 
         for (Obstacle obstacle : obstacles)
         {
              obstacle.y += obstacle.speed;
 
-            if (obstacle.y + obstacle.height > screenY*screenRatioY)
+            if (obstacle.y + obstacle.height > screenY+obstacle.height)
             {
-                int bound = (int) (30 * screenRatioY);
+                int bound = (int) (40 * screenRatioInvert);
                 obstacle.speed = random.nextInt(bound + 10);
 //                if (obstacle.speed < 10 * screenRatioY)
 //                {
@@ -118,8 +119,6 @@ public class GameView extends SurfaceView implements Runnable {
                 ((Activity) context).finish();
                 return;
             }
-
-
 
             canvas.drawBitmap(ship.getShip(), ship.x, ship.y, paint);
 
