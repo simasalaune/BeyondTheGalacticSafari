@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".OptionsActivity"
     android:orientation="vertical"
-    android:background="#372134"
+    android:background="@drawable/galaxy"
     android:gravity="center">
 
 
@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:fontFamily="@font/extrude"
         android:text="Skin Room"
         android:textAlignment="center"
@@ -22,15 +23,16 @@
 
     <ImageView
         android:id="@+id/skins"
-        android:layout_width="339dp"
-        android:layout_height="193dp"
-        app:srcCompat="@drawable/main_ship___base___full_health" />
+        android:layout_width="336dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/shipone" />
 
     <Button
         android:id="@+id/next_button"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/skin"
         android:fontFamily="@font/upheavtt"
@@ -42,7 +44,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="25dp"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/back"
         android:fontFamily="@font/upheavtt"

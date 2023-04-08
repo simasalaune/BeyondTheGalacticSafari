@@ -7,25 +7,25 @@
     tools:context=".MainActivity"
 
     android:orientation="vertical"
-    android:background="#372134"
+    android:background="@drawable/galaxy"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="335dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="359dp"
+        android:layout_height="191dp"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/extrude"
-        android:text="Beyond\nthe Galactic Safari"
         android:textAlignment="center"
         android:textColor="#8cefb6"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        app:srcCompat="@drawable/title" />
 
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:srcCompat="@drawable/ufo"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="40dp"
+        app:srcCompat="@drawable/planet" />
 
     <Button
         android:id="@+id/button"
@@ -33,7 +33,7 @@
         android:layout_height="65dp"
         android:text="Start"
         android:textSize="37sp"
-        android:textColor="#8cefb6"
+        android:textColor="#8ff8e2"
         android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/spaceship"
@@ -48,7 +48,7 @@
         android:fontFamily="@font/upheavtt"
         android:onClick="openSkinRoom"
         android:text="Change Skin"
-        android:textColor="#8cefb6"
+        android:textColor="#8ff8e2"
         android:textSize="20sp" />
 
     <Button
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:text="Options"
         android:textSize="20sp"
-        android:textColor="#8cefb6"
+        android:textColor="#8ff8e2"
         android:fontFamily="@font/upheavtt"
         android:backgroundTint="#474476"
         android:drawableLeft="@drawable/settings"

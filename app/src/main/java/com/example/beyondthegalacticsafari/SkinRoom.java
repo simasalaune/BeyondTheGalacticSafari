@@ -36,23 +36,21 @@ public class SkinRoom extends AppCompatActivity {
             case 1:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
-                skin.setImageResource(R.drawable.main_ship___base___full_health);
-                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.main_ship___base___full_health);
-                // TODO:
+
+                skin.setImageResource(R.drawable.shipone);
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shipone);
                 break;
             case 2:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
-                skin.setImageResource(R.drawable.emissary);
-                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.emissary);
-                // TODO:
+                skin.setImageResource(R.drawable.shiptwo);
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shiptwo);
                 break;
             case 3:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
-                skin.setImageResource(R.drawable.beholder);
-                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.beholder);
-                // TODO:
+                skin.setImageResource(R.drawable.shipthree);
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shipthree);
                 break;
         }
     }
