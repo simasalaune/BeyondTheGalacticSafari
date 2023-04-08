@@ -1,7 +1,8 @@
 package com.example.beyondthegalacticsafari;
 
-import static com.example.beyondthegalacticsafari.GameView.screenRatioX;
-import static com.example.beyondthegalacticsafari.GameView.screenRatioY;
+import static com.example.beyondthegalacticsafari.GameView.ScreenRatio;
+//import static com.example.beyondthegalacticsafari.GameView.screenRatioX;
+//import static com.example.beyondthegalacticsafari.GameView.screenRatioY;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,16 +25,18 @@ public class Ship {
         width = ship.getWidth();
         height = ship.getHeight();
 
+        width /= 12;
+        height /= 12;
 
-        width /= 24;
-        height /= 24;
+        if (ScreenRatio > 0)
+            width = (int)(width / ScreenRatio);
+        else if (ScreenRatio < 0)
+            width = (int)(width * ScreenRatio);
 
-        if ((int) screenRatioX != 0) {
-            width /= (int) screenRatioX;
-        }
-        if ((int) screenRatioY != 0) {
-            height /= (int) screenRatioY;
-        }
+        if(ScreenRatio > 0)
+            height = (int)(height / ScreenRatio);
+        else if (ScreenRatio < 0)
+            height = (int)(height * ScreenRatio);
 
         ship = Bitmap.createScaledBitmap(ship, width, height, false);
         x = screenX / 2 - width / 2;

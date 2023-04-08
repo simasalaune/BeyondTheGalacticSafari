@@ -1,7 +1,10 @@
 package com.example.beyondthegalacticsafari;
 
-import static com.example.beyondthegalacticsafari.GameView.screenRatioX;
-import static com.example.beyondthegalacticsafari.GameView.screenRatioY;
+import static com.example.beyondthegalacticsafari.GameView.ScreenRatio;
+//import static com.example.beyondthegalacticsafari.GameView.screenRatioX;
+//import static com.example.beyondthegalacticsafari.GameView.screenRatioY;
+import static com.example.beyondthegalacticsafari.GameView.screenRatioInvert;
+import static com.example.beyondthegalacticsafari.GameView.screenX;
 import static com.example.beyondthegalacticsafari.GameView.screenY;
 
 import android.content.res.Resources;
@@ -11,8 +14,8 @@ import android.graphics.Rect;
 
 public class Obstacle {
 
-    public int speed = 30;
-    int x, y = (int) (-screenY * screenRatioY), width, height;
+    public int speed = (int) (60 * screenRatioInvert);
+    int x, y = (int) (-screenY * screenRatioInvert), width, height;
     Bitmap obstacle;
 
     Obstacle (Resources res) {
@@ -21,15 +24,18 @@ public class Obstacle {
         width = obstacle.getWidth();
         height = obstacle.getHeight();
 
-        width *= 3;
-        height *= 3;
+        width *= 2;
+        height *= 2;
 
-        if ((int) screenRatioX != 0) {
-            width /= (int) screenRatioX;
-        }
-        if ((int) screenRatioY != 0) {
-            height /= (int) screenRatioY;
-        }
+        if (ScreenRatio > 0)
+            width = (int)(width / ScreenRatio);
+        else if (ScreenRatio < 0)
+            width = (int)(width * ScreenRatio);
+
+        if(ScreenRatio > 0)
+            height = (int)(height / ScreenRatio);
+        else if (ScreenRatio < 0)
+            height = (int)(height * ScreenRatio);
 
         obstacle = Bitmap.createScaledBitmap(obstacle, width, height, false);
         x = width;
