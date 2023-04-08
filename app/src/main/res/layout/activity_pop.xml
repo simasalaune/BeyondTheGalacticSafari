@@ -10,30 +10,30 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="175dp"
-        android:layout_height="wrap_content"
+        android:layout_height="78dp"
+        android:backgroundTint="#474476"
+        android:textSize="28sp"
+        android:fontFamily="@font/upheavtt"
         android:text="Main menu"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
-        android:backgroundTint="#474476"
-         />
+        android:textColor="#8cefb6" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:text="Options"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
-        android:backgroundTint="#474476"
-        />
+<!--    <Button-->
+<!--        android:id="@+id/button3"-->
+<!--        android:layout_width="175dp"-->
+<!--        android:layout_height="78dp"-->
+<!--        android:backgroundTint="#474476"-->
+<!--        android:textSize="28sp"-->
+<!--        android:fontFamily="@font/upheavtt"-->
+<!--        android:text="Options"-->
+<!--        android:textColor="#8cefb6" />-->
 
     <Button
         android:id="@+id/button4"
         android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:text="Resume"
-        android:textColor="#8cefb6"
-        android:fontFamily="@font/upheavtt"
+        android:layout_height="78dp"
         android:backgroundTint="#474476"
-        />
+        android:textSize="28sp"
+        android:fontFamily="@font/upheavtt"
+        android:text="Resume"
+        android:textColor="#8cefb6" />
 </LinearLayout>

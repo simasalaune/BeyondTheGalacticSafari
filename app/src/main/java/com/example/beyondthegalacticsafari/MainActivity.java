@@ -16,11 +16,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
     }
     public void startGame(View view) {
-        GameView gameView = new GameView(this);
-        setContentView(gameView);
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
     public void openSkinRoom(View view) {
         Intent intent = new Intent(this, SkinRoom.class);

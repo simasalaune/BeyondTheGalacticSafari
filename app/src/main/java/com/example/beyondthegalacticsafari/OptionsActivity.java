@@ -77,7 +77,6 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     public void back(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 }
