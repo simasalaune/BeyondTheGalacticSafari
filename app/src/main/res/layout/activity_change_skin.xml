@@ -26,7 +26,7 @@
         android:layout_width="336dp"
         android:layout_height="192dp"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/shipone" />
+        app:srcCompat="@drawable/spaceshipone" />
 
     <Button
         android:id="@+id/next_button"

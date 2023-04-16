@@ -17,7 +17,7 @@ public class Ship {
 
     Ship(int screenX, int screenY, Resources resources) {
         if (ShipBitmap.ship == null) {
-            ship = BitmapFactory.decodeResource(resources, R.drawable.shipthree);
+            ship = BitmapFactory.decodeResource(resources, R.drawable.spaceshipone);
         } else {
             ship = ShipBitmap.ship;
         }

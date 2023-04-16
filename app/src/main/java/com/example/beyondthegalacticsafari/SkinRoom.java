@@ -31,7 +31,7 @@ public class SkinRoom extends AppCompatActivity {
 
     private void changeSkin() {
         skinNumber++;
-        if (skinNumber > 3) {
+        if (skinNumber > 4) {
             skinNumber = 1;
         }
         Button nextButton = findViewById(R.id.next_button);
@@ -41,20 +41,26 @@ public class SkinRoom extends AppCompatActivity {
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
 
-                skin.setImageResource(R.drawable.shipone);
-                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shipone);
+                skin.setImageResource(R.drawable.spaceshipone);
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.spaceshipone);
                 break;
             case 2:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
-                skin.setImageResource(R.drawable.shiptwo);
-                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shiptwo);
+                skin.setImageResource(R.drawable.spaceshiptwo);
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.spaceshiptwo);
                 break;
             case 3:
                 nextButton.setText("Next");
                 nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
-                skin.setImageResource(R.drawable.shipthree);
-                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.shipthree);
+                skin.setImageResource(R.drawable.spaceshipthree);
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.spaceshipthree);
+                break;
+            case 4:
+                nextButton.setText("Next");
+                nextButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skin, 0, 0, 0);
+                skin.setImageResource(R.drawable.spaceshipfour);
+                ShipBitmap.ship = BitmapFactory.decodeResource(getResources(), R.drawable.spaceshipfour);
                 break;
         }
     }

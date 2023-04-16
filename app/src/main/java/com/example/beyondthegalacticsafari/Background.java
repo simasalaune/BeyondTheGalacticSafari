@@ -10,7 +10,7 @@ public class Background {
     Bitmap background;
 
     Background(int screenX, int screenY, Resources res) {
-        background = BitmapFactory.decodeResource(res, R.drawable.bg_space_seamless);
+        background = BitmapFactory.decodeResource(res, R.drawable.galaxy);
         background = Bitmap.createScaledBitmap(background, screenX,-screenY, false);
     }
 }

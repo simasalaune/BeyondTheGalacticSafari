@@ -12,6 +12,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
+import java.util.Random;
+
 public class Obstacle {
 
     public int speed = (int) (60 * screenRatioInvert);
@@ -19,7 +21,15 @@ public class Obstacle {
     Bitmap obstacle;
 
     Obstacle (Resources res) {
-        obstacle = BitmapFactory.decodeResource(res, R.drawable.rock1);
+        Bitmap[] obstacleSprites = new Bitmap[4];
+        obstacleSprites[0] = BitmapFactory.decodeResource(res, R.drawable.rockone);
+        obstacleSprites[1] = BitmapFactory.decodeResource(res, R.drawable.rocktwo);
+        obstacleSprites[2] = BitmapFactory.decodeResource(res, R.drawable.rockthree);
+        obstacleSprites[3] = BitmapFactory.decodeResource(res, R.drawable.rockfour);
+
+        // select a random sprite
+        int spriteIndex = new Random().nextInt(4);
+        obstacle = obstacleSprites[spriteIndex];
 
         width = obstacle.getWidth();
         height = obstacle.getHeight();
