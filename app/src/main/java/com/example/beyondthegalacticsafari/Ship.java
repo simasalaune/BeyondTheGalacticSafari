@@ -25,8 +25,8 @@ public class Ship {
         width = ship.getWidth();
         height = ship.getHeight();
 
-        width /= 12;
-        height /= 12;
+        width /= 28;
+        height /= 28;
 
         if (ScreenRatio > 0)
             width = (int)(width / ScreenRatio);

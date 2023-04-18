@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -14,13 +15,16 @@ import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
 
+    boolean temp;
+    int isColiding;
     private Thread thread;
     private boolean isPlaying, isGameOver = false;
-    private int  oldX,oldShipX;
+    private int  oldX,oldShipX, health;
     public static int screenX, screenY;
     public static float ScreenRatio, screenRatioInvert;
     private  Background background1, background2;
     private Paint paint;
+    Paint healthPaint = new Paint();
     private Ship ship;
     private Obstacle[] obstacles;
     private Random random;
@@ -29,6 +33,10 @@ public class GameView extends SurfaceView implements Runnable {
     public GameView(Context context, int screenX, int screenY) {
         super(context);
 
+        temp = false;
+        isColiding = 0;
+        healthPaint.setColor(Color.GREEN);
+        health = 3;
         this.context = context;
         this.screenX = screenX;
         this.screenY = screenY;
@@ -76,12 +84,10 @@ public class GameView extends SurfaceView implements Runnable {
             background2.y = -screenY;
         }
 
-        for (Obstacle obstacle : obstacles)
-        {
-             obstacle.y += obstacle.speed;
+        for (Obstacle obstacle : obstacles) {
+            obstacle.y += obstacle.speed;
 
-            if (obstacle.y + obstacle.height > screenY+obstacle.height)
-            {
+            if (obstacle.y + obstacle.height > screenY + obstacle.height) {
                 int bound = (int) (40 * screenRatioInvert);
                 obstacle.speed = random.nextInt(bound + 10);
 //                if (obstacle.speed < 10 * screenRatioY)
@@ -91,13 +97,19 @@ public class GameView extends SurfaceView implements Runnable {
                 obstacle.y = -screenY;
                 obstacle.x = random.nextInt(screenX - obstacle.width);
             }
-            if (Rect.intersects(obstacle.getCollisionShape(), ship.getCollisionShape()))
-            {
+            Rect rect = obstacle.getCollisionShape();
+            if (Rect.intersects(rect, ship.getCollisionShape())) {
+//                rect = null;
+//                temp = true;
+                health--;
+                obstacle.y = -screenY;
+//
+            }
+            if (health <= 0) {
                 isGameOver = true;
                 return;
             }
         }
-
     }
     private void draw(){
 
@@ -105,6 +117,17 @@ public class GameView extends SurfaceView implements Runnable {
             Canvas canvas = getHolder().lockCanvas();
             canvas.drawBitmap(background1.background, background1.x, background1.y,paint);
             canvas.drawBitmap(background2.background, background2.x, background2.y,paint);
+
+            if (health == 2){
+                healthPaint.setColor(Color.YELLOW);
+            } else if (health == 1) {
+                 healthPaint.setColor(Color.RED);
+            }
+            canvas.drawRect(screenX - 650, 100, screenX-650+60*health, 80, healthPaint);
+
+
+            //point.x - 200, 100, 0, 0
+
 
             for (Obstacle obstacle : obstacles)
                 canvas.drawBitmap(obstacle.getObstacle(), obstacle.x, obstacle.y, paint);
