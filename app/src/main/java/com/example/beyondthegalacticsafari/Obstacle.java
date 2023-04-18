@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.view.ViewGroup;
 
 import java.util.Random;
 
@@ -51,6 +52,10 @@ public class Obstacle {
         x = width;
     }
 
+//    public  void destry()
+//    {
+//        ViewGroup parent = (ViewGroup) view.getParent();
+//    }
     public Bitmap getObstacle()
     {
         return obstacle;
