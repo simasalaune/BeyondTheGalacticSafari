@@ -17,8 +17,8 @@ import java.util.Random;
 
 public class Obstacle {
 
-    public int speed = (int) (60 * screenRatioInvert);
-    int x, y = (int) (-screenY * screenRatioInvert), width, height;
+    public int speed = 60 * screenY/42;
+    int x, y = -screenY, width, height;
     Bitmap obstacle;
 
     Obstacle (Resources res) {
@@ -52,10 +52,6 @@ public class Obstacle {
         x = width;
     }
 
-//    public  void destry()
-//    {
-//        ViewGroup parent = (ViewGroup) view.getParent();
-//    }
     public Bitmap getObstacle()
     {
         return obstacle;

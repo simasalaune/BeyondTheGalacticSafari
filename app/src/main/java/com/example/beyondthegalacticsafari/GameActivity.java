@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
 
         ImageButton settings = new ImageButton(this);
         settings.setLayoutParams(set);
-        settings.setPadding(point.x - 200, 100, 0, 0);
+        settings.setPadding(point.x-point.x/5, point.y/24, 0, 0);
         settings.setBackgroundResource(android.R.color.transparent);
         settings.setImageResource(R.drawable.settings_button);
 

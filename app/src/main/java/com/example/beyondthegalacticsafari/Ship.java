@@ -40,7 +40,7 @@ public class Ship {
 
         ship = Bitmap.createScaledBitmap(ship, width, height, false);
         x = screenX / 2 - width / 2;
-        y = (screenY - 200 - height);
+        y = (screenY - (screenY /14) - height);
     }
 
     Bitmap getShip() {

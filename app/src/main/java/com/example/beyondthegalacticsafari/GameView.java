@@ -42,7 +42,6 @@ public class GameView extends SurfaceView implements Runnable {
         this.screenY = screenY;
 
         ScreenRatio = screenX/screenY;
-        screenRatioInvert = screenY/screenX;
 
         background1 = new Background(screenX, screenY, getResources());
         background2 = new Background(screenX, screenY, getResources());
@@ -73,8 +72,8 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
 
-        background1.y += 20 * screenRatioInvert;
-        background2.y += 20 * screenRatioInvert;
+        background1.y += screenY/42;
+        background2.y += screenY/42;
 
         if (background1.y + background1.background.getHeight() > screenY+background1.background.getHeight()) {
             background1.y = -screenY;
@@ -88,22 +87,14 @@ public class GameView extends SurfaceView implements Runnable {
             obstacle.y += obstacle.speed;
 
             if (obstacle.y + obstacle.height > screenY + obstacle.height) {
-                int bound = (int) (40 * screenRatioInvert);
-                obstacle.speed = random.nextInt(bound + 10);
-//                if (obstacle.speed < 10 * screenRatioY)
-//                {
-//                    obstacle.speed = (int) (10 * screenRatioY);
-//                }
+                obstacle.speed = random.nextInt(screenY/42 + screenY/84);
                 obstacle.y = -screenY;
                 obstacle.x = random.nextInt(screenX - obstacle.width);
             }
             Rect rect = obstacle.getCollisionShape();
             if (Rect.intersects(rect, ship.getCollisionShape())) {
-//                rect = null;
-//                temp = true;
                 health--;
                 obstacle.y = -screenY;
-//
             }
             if (health <= 0) {
                 isGameOver = true;
@@ -123,11 +114,7 @@ public class GameView extends SurfaceView implements Runnable {
             } else if (health == 1) {
                  healthPaint.setColor(Color.RED);
             }
-            canvas.drawRect(screenX - 650, 100, screenX-650+60*health, 80, healthPaint);
-
-
-            //point.x - 200, 100, 0, 0
-
+            canvas.drawRect(screenX/3, screenY/18, (screenX/3)+(screenX/9)*health, screenY/12, healthPaint);
 
             for (Obstacle obstacle : obstacles)
                 canvas.drawBitmap(obstacle.getObstacle(), obstacle.x, obstacle.y, paint);
