@@ -3,51 +3,75 @@ package com.example.beyondthegalacticsafari;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.os.Build;
+import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.widget.ImageButton;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameView extends SurfaceView implements Runnable {
-
-    boolean temp;
-    int isColiding;
+    private SharedPreferences prefs;
     private Thread thread;
     private boolean isPlaying, isGameOver = false;
-    private int  oldX,oldShipX, health;
+    private int  oldX,oldShipX, health, randomNum, score;
     public static int screenX, screenY;
-    public static float ScreenRatio, screenRatioInvert;
+    public static float ScreenRatio, ScreenRatioInvert;
     private  Background background1, background2;
-    private Paint paint;
-    Paint healthPaint = new Paint();
+    private Paint textPaint, scoreBackgroundPaint = new Paint(), healthPaint = new Paint();
+    private Typeface typeface;
+    private Rect scoreBackground, scoreBorder;
     private Ship ship;
     private Obstacle[] obstacles;
+    //private Animal[] animals;
+    private  Animal animal;
+    private  Animal animal2;
     private Random random;
 
+
     private Context context;
-    public GameView(Context context, int screenX, int screenY) {
+    public GameView(GameActivity context, int screenX, int screenY, GameActivity activity) {
         super(context);
 
-        temp = false;
-        isColiding = 0;
+        //this.activity = activity;
+
+        prefs = activity.getSharedPreferences("game", Context.MODE_PRIVATE);
+
         healthPaint.setColor(Color.GREEN);
         health = 3;
+        score = 50;
         this.context = context;
         this.screenX = screenX;
         this.screenY = screenY;
 
         ScreenRatio = screenX/screenY;
+        ScreenRatioInvert = screenY/screenX;
 
         background1 = new Background(screenX, screenY, getResources());
         background2 = new Background(screenX, screenY, getResources());
         background2.y = screenY;
 
-        paint = new Paint();
+        textPaint = new Paint();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            typeface = getResources().getFont(R.font.upheavtt);
+        }
+        textPaint.setTextSize(screenY/18);
+        textPaint.setTypeface(typeface);
+        textPaint.setColor(context.getColor(R.color.text));
+        scoreBackground = new Rect(screenX / 14, screenY/21,
+                (int) (screenX/3.5f), screenY/11);
+        scoreBorder = new Rect((int) ((screenX / 14)+10*ScreenRatioInvert), (int)((screenY/21)+10*ScreenRatioInvert),
+                (int)((screenX/3.5f)+10*ScreenRatioInvert), (int)((screenY/11)+10*ScreenRatioInvert));
+        scoreBackgroundPaint.setColor(context.getColor(R.color.backGround));
+
         ship = new Ship(screenX, screenY, getResources());
 
         obstacles = new Obstacle[6];
@@ -57,7 +81,17 @@ public class GameView extends SurfaceView implements Runnable {
             obstacles[i] = obstacle;
         }
 
+        animal = animal2 = new Animal(getResources());
+
+//        animals = new Animal[3];
+//        for (int i = 0; i < animals.length; i++)
+//        {
+//            Animal animal = new Animal(getResources());
+//            animals[i] = animal;
+//        }
+
         random = new Random();
+        randomNum = ThreadLocalRandom.current().nextInt(2, 5 + 1);
 
     }
     @Override
@@ -72,55 +106,68 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
 
-        background1.y += screenY/42;
-        background2.y += screenY/42;
+        setBackground(background1, background2);
 
-        if (background1.y + background1.background.getHeight() > screenY+background1.background.getHeight()) {
-            background1.y = -screenY;
-        }
+//        for (Animal animal : animals) {
+//            animalMove(animal);
+//            animalHit(animal);
+//        }
+        animalMove(animal);
+        animalHit(animal);
 
-        if (background2.y + background2.background.getHeight() > screenY+background1.background.getHeight()) {
-            background2.y = -screenY;
-        }
+        animalMove(animal2);
+        animalHit(animal2);
 
         for (Obstacle obstacle : obstacles) {
-            obstacle.y += obstacle.speed;
-
-            if (obstacle.y + obstacle.height > screenY + obstacle.height) {
-                obstacle.speed = random.nextInt(screenY/42 + screenY/84);
-                obstacle.y = -screenY;
-                obstacle.x = random.nextInt(screenX - obstacle.width);
-            }
-            Rect rect = obstacle.getCollisionShape();
-            if (Rect.intersects(rect, ship.getCollisionShape())) {
-                health--;
-                obstacle.y = -screenY;
-            }
-            if (health <= 0) {
-                isGameOver = true;
-                return;
-            }
+            obstacleMove(obstacle);
+            obstacleHit(obstacle);
         }
     }
     private void draw(){
 
         if (getHolder().getSurface().isValid()){
             Canvas canvas = getHolder().lockCanvas();
-            canvas.drawBitmap(background1.background, background1.x, background1.y,paint);
-            canvas.drawBitmap(background2.background, background2.x, background2.y,paint);
+            //Draw Background
+            canvas.drawBitmap(background1.background, background1.x, background1.y,textPaint);
+            canvas.drawBitmap(background2.background, background2.x, background2.y,textPaint);
 
+            //Draw Health Bar
             if (health == 2){
                 healthPaint.setColor(Color.YELLOW);
             } else if (health == 1) {
                  healthPaint.setColor(Color.RED);
             }
-            canvas.drawRect(screenX/3, screenY/18, (screenX/3)+(screenX/9)*health, screenY/12, healthPaint);
+            canvas.drawRect(screenX/3, screenY/18, (screenX/3)+(screenX/9)*health,
+                    screenY/12, healthPaint);
 
+            //Draw score
+            canvas.drawRect(scoreBorder, textPaint);
+            canvas.drawRect(scoreBackground, scoreBackgroundPaint);
+            canvas.drawText(score+"", screenX / 9, screenY/12, textPaint);
+
+            //Draw obstacles
             for (Obstacle obstacle : obstacles)
-                canvas.drawBitmap(obstacle.getObstacle(), obstacle.x, obstacle.y, paint);
+                canvas.drawBitmap(obstacle.getObstacle(), obstacle.x, obstacle.y, textPaint);
 
+//            //Draw obstacles
+//            for (Animal animal : animals)
+//                canvas.drawBitmap(animal.getAnimal(), animal.x, animal.y, paint);
+
+            //Draw animal
+            canvas.drawBitmap(animal.getAnimal(), animal.getX(), animal.getY(), textPaint);
+
+            //Draw ship
+            canvas.drawBitmap(ship.getShip(), ship.x, ship.y, textPaint);
+
+            //Check game over
             if(isGameOver)
             {
+                //save score
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("Score", score);
+                editor.apply();
+
+                //call Game Over screen
                 isPlaying = false;
                 getHolder().unlockCanvasAndPost(canvas);
                 sleep();
@@ -129,16 +176,64 @@ public class GameView extends SurfaceView implements Runnable {
                 ((Activity) context).finish();
                 return;
             }
-
-            canvas.drawBitmap(ship.getShip(), ship.x, ship.y, paint);
-
             getHolder().unlockCanvasAndPost(canvas);
+        }
+    }
+    //animal movement and coordinate reset
+    private void animalMove(Animal animal) {
+        animal.setY(animal.getY() + animal.speed);
+        if (animal.y + animal.height > screenY + animal.height) {
+            animal.setY(-screenY * randomNum);
+            animal.setX(random.nextInt(screenX - animal.width));
+        }
+    }
+    //animal hit detection and coordinate reset
+    private void animalHit(Animal animal){
+        Rect rect = animal.getAnimalCollisionShape();
+        if (Rect.intersects(rect, ship.getCollisionShape())) {
+            animal.setY(-screenY * randomNum);
+            animal.setX(random.nextInt(screenX - animal.width));
+            score += animal.score;
+        }
+    }
+    //obstacle movement and coordinate reset
+    private void obstacleMove(Obstacle obstacle) {
+        obstacle.y += obstacle.speed;
+        if (obstacle.y + obstacle.height > screenY + obstacle.height) {
+            obstacle.speed = random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert));
+            obstacle.y = -screenY;
+            obstacle.x = random.nextInt(screenX - obstacle.width);
+        }
+    }
+    //obstacle hit detection and coordinate reset
+    private void obstacleHit(Obstacle obstacle) {
+        Rect rect = obstacle.getCollisionShape();
+        if (Rect.intersects(rect, ship.getCollisionShape())) {
+            health--;
+            obstacle.y = -screenY;
+            obstacle.x = random.nextInt(screenX - obstacle.width);
+        }
+        if (health <= 0) {
+            isGameOver = true;
+        }
+    }
+    //Background movement
+    private void setBackground(Background background1, Background background2)
+    {
+        background1.y += screenY/82*ScreenRatioInvert;
+        background2.y += screenY/82*ScreenRatioInvert;
 
+        if (background1.y + background1.background.getHeight() > screenY+background1.background.getHeight()) {
+            background1.y = -screenY;
+        }
+
+        if (background2.y + background2.background.getHeight() > screenY+background1.background.getHeight()) {
+            background2.y = -screenY;
         }
     }
         private void sleep(){
         try {
-            Thread.sleep(17);
+            Thread.sleep(7);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -179,7 +274,4 @@ public class GameView extends SurfaceView implements Runnable {
         }
         return true;
     }
-
-
-
 }

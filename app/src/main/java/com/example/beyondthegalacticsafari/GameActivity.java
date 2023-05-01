@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -33,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
 
-        gameView = new GameView(this, point.x, point.y);
+        gameView = new GameView(this, point.x, point.y, this);
         game = new FrameLayout(this);
         GameButtons=new RelativeLayout(this);
         RelativeLayout.LayoutParams set = new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
@@ -41,11 +42,17 @@ public class GameActivity extends AppCompatActivity {
 
         GameButtons.setLayoutParams(prams);
 
-        ImageButton settings = new ImageButton(this);
+        Button settings = new Button(this);
         settings.setLayoutParams(set);
-        settings.setPadding(point.x-point.x/5, point.y/24, 0, 0);
-        settings.setBackgroundResource(android.R.color.transparent);
-        settings.setImageResource(R.drawable.settings_button);
+        settings.setX(point.x-point.x/3.5f);
+        settings.setY(point.y/24);
+        settings.setBackgroundResource(R.drawable.settings_button);
+
+//        ImageButton settings = new ImageButton(this);
+//        settings.setLayoutParams(set);
+//        settings.setPadding(point.x-point.x/5, point.y/24, 0, 0);
+//        settings.setBackgroundResource(android.R.color.transparent);
+//        settings.setImageResource(R.drawable.settings_button);
 
         GameButtons.addView(settings);
 

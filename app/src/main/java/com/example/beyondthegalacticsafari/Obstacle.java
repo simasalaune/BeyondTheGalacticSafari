@@ -3,7 +3,7 @@ package com.example.beyondthegalacticsafari;
 import static com.example.beyondthegalacticsafari.GameView.ScreenRatio;
 //import static com.example.beyondthegalacticsafari.GameView.screenRatioX;
 //import static com.example.beyondthegalacticsafari.GameView.screenRatioY;
-import static com.example.beyondthegalacticsafari.GameView.screenRatioInvert;
+import static com.example.beyondthegalacticsafari.GameView.ScreenRatioInvert;
 import static com.example.beyondthegalacticsafari.GameView.screenX;
 import static com.example.beyondthegalacticsafari.GameView.screenY;
 
@@ -17,8 +17,10 @@ import java.util.Random;
 
 public class Obstacle {
 
-    public int speed = 60 * screenY/42;
+    public int speed;
     int x, y = -screenY, width, height;
+
+    Random random = new Random();
     Bitmap obstacle;
 
     Obstacle (Resources res) {
@@ -49,7 +51,8 @@ public class Obstacle {
             height = (int)(height * ScreenRatio);
 
         obstacle = Bitmap.createScaledBitmap(obstacle, width, height, false);
-        x = width;
+        x = random.nextInt(screenX - width) ;
+        speed = random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert));
     }
 
     public Bitmap getObstacle()
