@@ -2,6 +2,7 @@ package com.example.beyondthegalacticsafari;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +12,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.media.MediaPlayer;
 public class OptionsActivity extends AppCompatActivity {
 
     private boolean soundEnabled = true;
+    private MediaPlayer mediaPlayer;
+    private boolean isSoundOn;
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +53,12 @@ public class OptionsActivity extends AppCompatActivity {
             // Turn sound on
             soundButton.setText("Sound Off");
             soundButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.nosound, 0, 0, 0);
+            isSoundOn = false;
         } else {
             // Turn sound off
             soundButton.setText("Sound On");
             soundButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.yessound, 0, 0, 0);
+            isSoundOn = true;
         }
     }
 

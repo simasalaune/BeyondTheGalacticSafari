@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,23 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.media.MediaPlayer;
 
 public class GameActivity extends AppCompatActivity {
     private GameView gameView;
     private FrameLayout game;
     private RelativeLayout GameButtons;
+    private MediaPlayer mediaPlayer;
+    private boolean isSoundOn;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mediaPlayer = MediaPlayer.create(this, R.raw.muzikele);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -60,6 +69,8 @@ public class GameActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), Pop.class);
                 startActivity(intent);
             }
+
+
         });
     }
 
@@ -67,11 +78,18 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         gameView.resume();
+        if (mediaPlayer != null) {
+            mediaPlayer.setLooping(true); // Set to true if you want the sound to loop
+            mediaPlayer.start();
+        }
     }
 }
