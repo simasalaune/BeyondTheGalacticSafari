@@ -23,10 +23,10 @@ public class Obstacle {
 
     Obstacle (Resources res) {
         Bitmap[] obstacleSprites = new Bitmap[4];
-        obstacleSprites[0] = BitmapFactory.decodeResource(res, R.drawable.rockone);
-        obstacleSprites[1] = BitmapFactory.decodeResource(res, R.drawable.rocktwo);
-        obstacleSprites[2] = BitmapFactory.decodeResource(res, R.drawable.rockthree);
-        obstacleSprites[3] = BitmapFactory.decodeResource(res, R.drawable.rockfour);
+        obstacleSprites[0] = BitmapFactory.decodeResource(res, R.drawable.brownrockone);
+        obstacleSprites[1] = BitmapFactory.decodeResource(res, R.drawable.brownrocktwo);
+        obstacleSprites[2] = BitmapFactory.decodeResource(res, R.drawable.brownrockthree);
+        obstacleSprites[3] = BitmapFactory.decodeResource(res, R.drawable.brownrockfour);
 
         // select a random sprite
         int spriteIndex = new Random().nextInt(4);
