@@ -34,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
-        if (mediaPlayer != null && isPlaying == false) {
+        /*if (mediaPlayer != null && isPlaying == false) {
             mediaPlayer.setLooping(true); // Set to true if you want the sound to loop
             mediaPlayer.start();
         }
-        //else if (mediaPlayer != null || isSoundOn == true) mediaPlayer.stop();
+        //else if (mediaPlayer != null || isSoundOn == true) mediaPlayer.stop();*/
     }
     public void openSkinRoom(View view) {
         Intent intent = new Intent(this, SkinRoom.class);

@@ -5,6 +5,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -31,8 +32,11 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mediaPlayer = MediaPlayer.create(this, R.raw.muzikele);
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        isSoundOn = preferences.getBoolean("sound_enabled", true);
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.muzikele);
+        mediaPlayer.setLooping(true); // Loop the sound continuously
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -78,17 +82,30 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
+        pauseBackgroundSound();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         gameView.resume();
-        if (mediaPlayer != null) {
-            mediaPlayer.setLooping(true); // Set to true if you want the sound to loop
+        resumeBackgroundSound();
+    }
+
+    private void startBackgroundSound() {
+        if (isSoundOn && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    private void pauseBackgroundSound() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    private void resumeBackgroundSound() {
+        if (isSoundOn && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
     }
