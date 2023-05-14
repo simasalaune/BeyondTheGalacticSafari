@@ -10,15 +10,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.widget.ImageButton;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class GameView extends SurfaceView implements Runnable {
+public class GameView1 extends SurfaceView implements Runnable {
     private SharedPreferences prefs;
     private Thread thread;
     private boolean isPlaying, isGameOver = false, obstacleOn = false, levelWon = false;
@@ -38,7 +36,7 @@ public class GameView extends SurfaceView implements Runnable {
 
 
     private Context context;
-    public GameView(GameActivity context, int screenX, int screenY, GameActivity activity) {
+    public GameView1(GameActivity1 context, int screenX, int screenY, GameActivity1 activity) {
         super(context);
 
         //this.activity = activity;
@@ -73,6 +71,8 @@ public class GameView extends SurfaceView implements Runnable {
         scoreBackgroundPaint.setColor(context.getColor(R.color.backGround));
 
         ship = new Ship(screenX, screenY, getResources());
+        ship.y = screenY;
+        levelWon = false;
 
         obstacles = new Obstacle[6];
         for (int i = 0; i < obstacles.length; i++)
@@ -92,7 +92,6 @@ public class GameView extends SurfaceView implements Runnable {
 
         random = new Random();
         randomNum = ThreadLocalRandom.current().nextInt(2, 5 + 1);
-
     }
     @Override
     public void run() {
@@ -112,20 +111,13 @@ public class GameView extends SurfaceView implements Runnable {
 //            animalMove(animal);
 //            animalHit(animal);
 //        }
-        if (score == 50)
+        if (score == 100)
         {
             obstacleOn = false;
             levelWon = true;
             if (ship.y != -screenY) {
                 ship.y -= 30 * ScreenRatioInvert;
             }
-//            else
-//            {
-//
-////                Intent intent = new Intent(getContext(), GameActivity.class);
-////                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////                getContext().startActivity(intent);
-//            }
         }
         shipEnter();
 
@@ -182,7 +174,7 @@ public class GameView extends SurfaceView implements Runnable {
             if (ship.y < -screenY) {
                 getHolder().unlockCanvasAndPost(canvas);
                 sleep();
-                Intent intent = new Intent(context, GameActivity1.class);
+                Intent intent = new Intent(context, GameActivity.class);
                 context.startActivity(intent);
                 ((Activity) context).finish();
                 return;

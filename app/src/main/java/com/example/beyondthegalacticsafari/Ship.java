@@ -1,6 +1,7 @@
 package com.example.beyondthegalacticsafari;
 
 import static com.example.beyondthegalacticsafari.GameView.ScreenRatio;
+import static com.example.beyondthegalacticsafari.GameView.screenY;
 //import static com.example.beyondthegalacticsafari.GameView.screenRatioX;
 //import static com.example.beyondthegalacticsafari.GameView.screenRatioY;
 
@@ -40,9 +41,10 @@ public class Ship {
 
         ship = Bitmap.createScaledBitmap(ship, width, height, false);
         x = screenX / 2 - width / 2;
-        y = (screenY - (screenY /14) - height);
+        y = screenY;
     }
 
+    public void reset() {y = screenY;}
     Bitmap getShip() {
         return ship;
     }

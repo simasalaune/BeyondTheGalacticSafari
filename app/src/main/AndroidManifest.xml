@@ -15,6 +15,9 @@
             android:name=".GameActivity"
             android:exported="false" />
         <activity
+            android:name=".GameActivity1"
+            android:exported="false" />
+        <activity
             android:name=".GameOVer"
             android:exported="false" />
         <activity
