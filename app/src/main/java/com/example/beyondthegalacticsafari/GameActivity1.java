@@ -2,42 +2,26 @@ package com.example.beyondthegalacticsafari;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
-import android.media.MediaPlayer;
 
-public class GameActivity extends AppCompatActivity {
-    private GameView gameView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class GameActivity1 extends AppCompatActivity {
+    private GameView1 gameView;
     private FrameLayout game;
     private RelativeLayout GameButtons;
-    private MediaPlayer mediaPlayer;
-    private boolean isSoundOn;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        isSoundOn = preferences.getBoolean("sound_enabled", true);
-
-        mediaPlayer = MediaPlayer.create(this, R.raw.muzikele);
-        mediaPlayer.setLooping(true); // Loop the sound continuously
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -47,11 +31,11 @@ public class GameActivity extends AppCompatActivity {
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
 
-        gameView = new GameView(this, point.x, point.y, this);
+        gameView = new GameView1(this, point.x, point.y, this);
         game = new FrameLayout(this);
         GameButtons=new RelativeLayout(this);
-        RelativeLayout.LayoutParams set = new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        RelativeLayout.LayoutParams prams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams set = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+        LayoutParams prams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         GameButtons.setLayoutParams(prams);
 
@@ -80,8 +64,6 @@ public class GameActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), Pop.class);
                 startActivity(intent);
             }
-
-
         });
     }
 
@@ -89,31 +71,11 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
-        pauseBackgroundSound();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         gameView.resume();
-        resumeBackgroundSound();
-    }
-
-    private void startBackgroundSound() {
-        if (isSoundOn && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
-    }
-
-    private void pauseBackgroundSound() {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-        }
-    }
-
-    private void resumeBackgroundSound() {
-        if (isSoundOn && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
     }
 }
