@@ -2,6 +2,7 @@ package com.example.beyondthegalacticsafari;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +12,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.media.MediaPlayer;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 public class OptionsActivity extends AppCompatActivity {
 
-    private boolean soundEnabled = true;
+    private static boolean soundEnabled = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,15 @@ public class OptionsActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_options);
 
+        // Retrieve sound setting from SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        soundEnabled = preferences.getBoolean("sound_enabled", true);
+
         Button soundButton = findViewById(R.id.sound_button);
         Button difficultyButton = findViewById(R.id.difficulty_button);
+
+        updateSoundButton();
+
         soundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,13 +54,21 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void turnOnOffSound() {
         soundEnabled = !soundEnabled;
+        updateSoundButton();
+
+        // Save sound setting to SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("sound_enabled", soundEnabled);
+        editor.apply();
+    }
+
+    private void updateSoundButton() {
         Button soundButton = findViewById(R.id.sound_button);
         if (soundEnabled) {
-            // Turn sound on
             soundButton.setText("Sound Off");
             soundButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.nosound, 0, 0, 0);
         } else {
-            // Turn sound off
             soundButton.setText("Sound On");
             soundButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.yessound, 0, 0, 0);
         }
