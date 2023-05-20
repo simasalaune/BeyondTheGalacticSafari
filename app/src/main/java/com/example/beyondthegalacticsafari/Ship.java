@@ -45,6 +45,9 @@ public class Ship {
     }
 
     public void reset() {y = screenY;}
+    public int getY() {return y;}
+    public void setY(int a) {y = a;}
+
     Bitmap getShip() {
         return ship;
     }

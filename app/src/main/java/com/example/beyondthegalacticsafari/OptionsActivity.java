@@ -87,16 +87,19 @@ public class OptionsActivity extends AppCompatActivity {
                 difficultyButton.setText("Easy");
                 difficultyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.easy, 0, 0, 0);
                 // TODO: set game difficulty to easy
+                Speed.Speed = 0.5f;
                 break;
             case 2:
                 difficultyButton.setText("Medium");
                 difficultyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.medium, 0, 0, 0);
                 // TODO: set game difficulty to medium
+                Speed.Speed = 1;
                 break;
             case 3:
                 difficultyButton.setText("Hard");
                 difficultyButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.hard, 0, 0, 0);
                 // TODO: set game difficulty to hard
+                Speed.Speed = 1.5f;
                 break;
         }
     }

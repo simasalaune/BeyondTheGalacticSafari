@@ -12,22 +12,17 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.widget.ImageButton;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class GameView extends SurfaceView implements Runnable {
-
-    final String PREFS_NAME = "MyPrefsFile";
-    boolean obstFirsthit = false, animalFirsthit = false, skullFirstHit = false;
+public class GameView4 extends SurfaceView implements Runnable {
     private SharedPreferences prefs;
     private Thread thread;
     private boolean isPlaying, isGameOver = false, obstacleOn = false, levelWon = false;
-    private int  oldX,oldShipX, health, randomNum, randomNum1, score, scoreAmount = 10;
+    private int  oldX,oldShipX, health, randomNum, randomNum1, score;
     public static int screenX, screenY;
     public static float ScreenRatio, ScreenRatioInvert;
     private  Background background1, background2;
@@ -46,28 +41,22 @@ public class GameView extends SurfaceView implements Runnable {
 
 
     private Context context;
-    public GameView(GameActivity context, int screenX, int screenY, GameActivity activity) {
+    public GameView4(GameActivity4 context, int screenX, int screenY, GameActivity4 activity) {
         super(context);
 
         //this.activity = activity;
 
 
 
-
         prefs = activity.getSharedPreferences("game", Context.MODE_PRIVATE);
-      //  SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("Temp", 0);
-        editor.putInt("ObsCheck", 0);
-        editor.putInt("AnimalCheck", 0);
-        editor.putInt("BombCheck", 0);
-        editor.apply();
+//        editor.putInt("Temp", (prefs.getInt("Score", 0)));
+//        editor.apply();
 
         healthPaint.setColor(Color.GREEN);
         health = 3;
-        score = 0;
+        score = (prefs.getInt("Temp", 0));
         this.context = context;
         this.screenX = screenX;
         this.screenY = screenY;
@@ -75,7 +64,7 @@ public class GameView extends SurfaceView implements Runnable {
         ScreenRatio = screenX/screenY;
         ScreenRatioInvert = screenY/screenX;
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.galaxy);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.redgalaxy);
         background1 = new Background(screenX, screenY, bitmap);
         background2 = new Background(screenX, screenY, bitmap);
         background2.y = screenY;
@@ -95,15 +84,15 @@ public class GameView extends SurfaceView implements Runnable {
 
         ship = new Ship(screenX, screenY, getResources());
 
-        obstacles = new Obstacle[5];
+        obstacles = new Obstacle[8];
         healthPickups = new HealthPickup[4];
-        bombs = new Bomb[1];
+        bombs = new Bomb[2];
 
         Bitmap[] obstacleSprites = new Bitmap[4];
-        obstacleSprites[0] = BitmapFactory.decodeResource(getResources(), R.drawable.brownrockone);
-        obstacleSprites[1] = BitmapFactory.decodeResource(getResources(), R.drawable.brownrocktwo);
-        obstacleSprites[2] = BitmapFactory.decodeResource(getResources(), R.drawable.brownrockthree);
-        obstacleSprites[3] = BitmapFactory.decodeResource(getResources(), R.drawable.brownrockfour);
+        obstacleSprites[0] = BitmapFactory.decodeResource(getResources(), R.drawable.redrockone);
+        obstacleSprites[1] = BitmapFactory.decodeResource(getResources(), R.drawable.redrocktwo);
+        obstacleSprites[2] = BitmapFactory.decodeResource(getResources(), R.drawable.redrockthree);
+        obstacleSprites[3] = BitmapFactory.decodeResource(getResources(), R.drawable.redrockfour);
 
         for (int i = 0; i < obstacles.length; i++)
         {
@@ -154,34 +143,28 @@ public class GameView extends SurfaceView implements Runnable {
 //            animalMove(animal);
 //            animalHit(animal);
 //        }
-        if (score == 50)
-        {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("Temp", score);
-            editor.apply();
-
-            obstacleOn = false;
-            levelWon = true;
-            if (ship.y != -screenY) {
-                ship.y -= 30 * ScreenRatioInvert;
-            }
-            else
-            {
-                //getHolder().unlockCanvasAndPost(canvas);
-                sleep();
-                Intent intent = new Intent(context, GameActivity2.class);
-                context.startActivity(intent);
-                ((Activity) context).finish();
-                return;
-            }
-        }
+//        if (score == 150)
+//        {
+//            obstacleOn = false;
+//            levelWon = true;
+//            if (ship.y != -screenY) {
+//                ship.y -= 30 * ScreenRatioInvert;
+//            }
+//            else
+//            {
+//
+////                Intent intent = new Intent(getContext(), GameActivity.class);
+////                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////                getContext().startActivity(intent);
+//            }
+//        }
 //        animalMove(animal);
 //        animalHit(animal);
 //
 //        animalMove(animal2);
 //        animalHit(animal2);
 
-        if (obstacleOn == true && obstFirsthit == false && animalFirsthit == false && skullFirstHit == false) {
+        if (obstacleOn == true) {
             for (Obstacle obstacle : obstacles) {
                 obstacleMove(obstacle);
                 obstacleHit(obstacle);
@@ -196,13 +179,7 @@ public class GameView extends SurfaceView implements Runnable {
                 }
                 Rect rect = healthPickup.getCollisionShape();
                 if (Rect.intersects(rect, ship.getCollisionShape())) {
-                    if (prefs.getInt("AnimalCheck", 0) == 0) {
-                        animalFirsthit = true;
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putInt("AnimalCheck", 1);
-                        editor.apply();
-                    }
-                    score += scoreAmount;
+                    score += 5;
                     if (health < 3) {
                         health++;
                     }
@@ -220,17 +197,7 @@ public class GameView extends SurfaceView implements Runnable {
                 }
                 Rect rect = bomb.getCollisionShape();
                 if (Rect.intersects(rect, ship.getCollisionShape())) {
-
-                    if (prefs.getInt("BombCheck", 0) == 0) {
-                        skullFirstHit = true;
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putInt("BombCheck", 1);
-                        editor.apply();
-                    }
-                    else
-                    {
-                        health -= 10;
-                    }
+                    health -= 10;
                     bomb.y = -screenY;
                 }
             }
@@ -278,27 +245,6 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawBitmap(background1.background, background1.x, background1.y,textPaint);
             canvas.drawBitmap(background2.background, background2.x, background2.y,textPaint);
 
-            if (obstFirsthit == true)
-            {
-
-                canvas.drawText("Rocks", screenX/2-400, screenY/2, textPaint);
-                canvas.drawText("take off 1 HP", screenX/2-400, screenY/2+200, textPaint);
-
-            }
-            if (skullFirstHit == true)
-            {
-
-                canvas.drawText("Bombs", screenX/2-500, screenY/2, textPaint);
-                canvas.drawText("destroy your ship", screenX/2-500, screenY/2+200, textPaint);
-
-            }
-            if (animalFirsthit == true)
-            {
-
-                canvas.drawText("Animals", screenX/2-500, screenY/2, textPaint);
-                canvas.drawText("Boost your HP", screenX/2-500, screenY/2+200, textPaint);
-
-            }
             //Draw Health Bar
             if(health == 3) {
                 healthPaint.setColor(Color.GREEN);
@@ -330,15 +276,15 @@ public class GameView extends SurfaceView implements Runnable {
             //Draw ship
             canvas.drawBitmap(ship.getShip(), ship.x, ship.y, textPaint);
 
-            if (ship.y < -screenY) {
-
-                getHolder().unlockCanvasAndPost(canvas);
-                sleep();
-                Intent intent = new Intent(context, GameActivity2.class);
-                context.startActivity(intent);
-                ((Activity) context).finish();
-                return;
-            }
+//            if (ship.y < -screenY) {
+//
+//                getHolder().unlockCanvasAndPost(canvas);
+//                sleep();
+//                Intent intent = new Intent(context, GameActivity1.class);
+//                context.startActivity(intent);
+//                ((Activity) context).finish();
+//                return;
+//            }
           
             //Draw Health Pickup
             for (HealthPickup healthPickup : healthPickups)
@@ -398,12 +344,6 @@ public class GameView extends SurfaceView implements Runnable {
     private void obstacleHit(Obstacle obstacle) {
         Rect rect = obstacle.getCollisionShape();
         if (Rect.intersects(rect, ship.getCollisionShape())) {
-            if (prefs.getInt("ObsCheck", 0) == 0) {
-                obstFirsthit = true;
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("ObsCheck", 1);
-                editor.apply();
-            }
             health--;
             obstacle.y = -screenY;
             obstacle.x = random.nextInt(screenX - obstacle.width);
@@ -465,18 +405,6 @@ public class GameView extends SurfaceView implements Runnable {
         if (touchY >= ship.y) {
             int action = event.getAction();
             if (action == MotionEvent.ACTION_DOWN) {
-                if (obstFirsthit == true)
-                {
-                    obstFirsthit = false;
-                }
-                if (animalFirsthit == true)
-                {
-                    animalFirsthit = false;
-                }
-                if (skullFirstHit == true)
-                {
-                    skullFirstHit = false;
-                }
                 oldX = (int) event.getX();
                 oldShipX = ship.x;
             }

@@ -15,7 +15,13 @@
             android:name=".GameActivity"
             android:exported="false" />
         <activity
-            android:name=".GameActivity1"
+            android:name=".GameActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".GameActivity3"
+            android:exported="false" />
+        <activity
+            android:name=".GameActivity4"
             android:exported="false" />
         <activity
             android:name=".GameOVer"

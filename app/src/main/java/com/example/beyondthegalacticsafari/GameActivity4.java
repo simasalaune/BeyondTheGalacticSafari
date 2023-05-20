@@ -3,7 +3,9 @@ package com.example.beyondthegalacticsafari;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,14 +16,24 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class GameActivity1 extends AppCompatActivity {
-    private GameView1 gameView;
+public class GameActivity4 extends AppCompatActivity {
+    private GameView4 gameView;
     private FrameLayout game;
     private RelativeLayout GameButtons;
+    private MediaPlayer mediaPlayer;
+    private boolean isSoundOn;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        isSoundOn = preferences.getBoolean("sound_enabled", true);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.muzikele);
+        mediaPlayer.setLooping(true); // Loop the sound continuously
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -31,7 +43,7 @@ public class GameActivity1 extends AppCompatActivity {
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
 
-        gameView = new GameView1(this, point.x, point.y, this);
+        gameView = new GameView4(this, point.x, point.y, this);
         game = new FrameLayout(this);
         GameButtons=new RelativeLayout(this);
         LayoutParams set = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
@@ -64,6 +76,8 @@ public class GameActivity1 extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), Pop.class);
                 startActivity(intent);
             }
+
+
         });
     }
 
@@ -71,11 +85,31 @@ public class GameActivity1 extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gameView.pause();
+        pauseBackgroundSound();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         gameView.resume();
+        resumeBackgroundSound();
+    }
+
+    private void startBackgroundSound() {
+        if (isSoundOn && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    private void pauseBackgroundSound() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    private void resumeBackgroundSound() {
+        if (isSoundOn && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
     }
 }
