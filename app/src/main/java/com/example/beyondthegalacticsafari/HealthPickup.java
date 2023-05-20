@@ -1,6 +1,7 @@
 package com.example.beyondthegalacticsafari;
 
 import static com.example.beyondthegalacticsafari.GameView.ScreenRatio;
+import static com.example.beyondthegalacticsafari.GameView.ScreenRatioInvert;
 import static com.example.beyondthegalacticsafari.GameView.screenY;
 
 import android.content.res.Resources;
@@ -9,11 +10,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class HealthPickup {
 
-    public int speed = 10 * screenY/42;
-    int x, y = -screenY, width, height;
+    Random random = new Random();
+    int randomNum;
+    public int speed = random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert));
+    int x, y, width, height, score = 1;
     Bitmap healthPickup;
 
     HealthPickup(Resources res, int number) {
@@ -46,6 +50,8 @@ public class HealthPickup {
 
         healthPickup = Bitmap.createScaledBitmap(healthPickup, width, height, false);
         x = width;
+        randomNum = ThreadLocalRandom.current().nextInt(2, 5 + 1);
+        y = -screenY * randomNum;
     }
 
     public Bitmap getHealthPickup()
@@ -55,6 +61,6 @@ public class HealthPickup {
 
     public Rect getCollisionShape()
     {
-        return new Rect(x, y, x + width, y + height);
+        return new Rect(x, y, x + width+100, y + height+100);
     }
 }

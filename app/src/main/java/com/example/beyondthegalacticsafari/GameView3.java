@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,11 +18,11 @@ import android.view.SurfaceView;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class GameView1 extends SurfaceView implements Runnable {
+public class GameView3 extends SurfaceView implements Runnable {
     private SharedPreferences prefs;
     private Thread thread;
     private boolean isPlaying, isGameOver = false, obstacleOn = false, levelWon = false;
-    private int  oldX,oldShipX, health, randomNum, score;
+    private int  oldX,oldShipX, health, randomNum, randomNum1, score, scoreAmount = 100;
     public static int screenX, screenY;
     public static float ScreenRatio, ScreenRatioInvert;
     private  Background background1, background2;
@@ -32,20 +34,29 @@ public class GameView1 extends SurfaceView implements Runnable {
     //private Animal[] animals;
     private  Animal animal;
     private  Animal animal2;
+    private HealthPickup[] healthPickups;
+    private Bomb[] bombs;
+
     private Random random;
 
 
     private Context context;
-    public GameView1(GameActivity1 context, int screenX, int screenY, GameActivity1 activity) {
+    public GameView3(GameActivity3 context, int screenX, int screenY, GameActivity3 activity) {
         super(context);
 
         //this.activity = activity;
 
+
+
         prefs = activity.getSharedPreferences("game", Context.MODE_PRIVATE);
+
+     //   SharedPreferences.Editor editor = prefs.edit();
+//        editor.putInt("Temp", (prefs.getInt("Score", 0)));
+//        editor.apply();
 
         healthPaint.setColor(Color.GREEN);
         health = 3;
-        score = 50;
+        score = (prefs.getInt("Temp", 0));
         this.context = context;
         this.screenX = screenX;
         this.screenY = screenY;
@@ -53,8 +64,9 @@ public class GameView1 extends SurfaceView implements Runnable {
         ScreenRatio = screenX/screenY;
         ScreenRatioInvert = screenY/screenX;
 
-        background1 = new Background(screenX, screenY, getResources());
-        background2 = new Background(screenX, screenY, getResources());
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.greengalaxy);
+        background1 = new Background(screenX, screenY, bitmap);
+        background2 = new Background(screenX, screenY, bitmap);
         background2.y = screenY;
 
         textPaint = new Paint();
@@ -71,14 +83,31 @@ public class GameView1 extends SurfaceView implements Runnable {
         scoreBackgroundPaint.setColor(context.getColor(R.color.backGround));
 
         ship = new Ship(screenX, screenY, getResources());
-        ship.y = screenY;
-        levelWon = false;
 
-        obstacles = new Obstacle[6];
+        obstacles = new Obstacle[10];
+        healthPickups = new HealthPickup[4];
+        bombs = new Bomb[2];
+
+        Bitmap[] obstacleSprites = new Bitmap[4];
+        obstacleSprites[0] = BitmapFactory.decodeResource(getResources(), R.drawable.greenrockone);
+        obstacleSprites[1] = BitmapFactory.decodeResource(getResources(), R.drawable.greenrocktwo);
+        obstacleSprites[2] = BitmapFactory.decodeResource(getResources(), R.drawable.greenrockthree);
+        obstacleSprites[3] = BitmapFactory.decodeResource(getResources(), R.drawable.greenrockfour);
+
         for (int i = 0; i < obstacles.length; i++)
         {
-            Obstacle obstacle = new Obstacle(getResources());
+            Obstacle obstacle = new Obstacle(obstacleSprites);
             obstacles[i] = obstacle;
+        }
+        for (int i = 0; i < healthPickups.length; i++)
+        {
+            HealthPickup healthPickup = new HealthPickup(getResources(), i);
+            healthPickups[i] = healthPickup;
+        }
+        for (int i = 0; i < bombs.length; i++)
+        {
+            Bomb bomb = new Bomb(getResources(), i);
+            bombs[i] = bomb;
         }
 
         animal = animal2 = new Animal(getResources());
@@ -92,6 +121,8 @@ public class GameView1 extends SurfaceView implements Runnable {
 
         random = new Random();
         randomNum = ThreadLocalRandom.current().nextInt(2, 5 + 1);
+        randomNum1 = ThreadLocalRandom.current().nextInt(2, 3);
+
     }
     @Override
     public void run() {
@@ -106,33 +137,108 @@ public class GameView1 extends SurfaceView implements Runnable {
     private void update() {
 
         setBackground(background1, background2);
+        shipEnter();
 
 //        for (Animal animal : animals) {
 //            animalMove(animal);
 //            animalHit(animal);
 //        }
-        if (score == 100)
+        if (score >= 300)
         {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("Temp", score);
+            editor.apply();
+
             obstacleOn = false;
             levelWon = true;
             if (ship.y != -screenY) {
                 ship.y -= 30 * ScreenRatioInvert;
             }
+            else {
+                sleep();
+                Intent intent = new Intent(context, GameActivity4.class);
+                context.startActivity(intent);
+                ((Activity) context).finish();
+                return;
+            }
         }
-        shipEnter();
-
-
-        animalMove(animal);
-        animalHit(animal);
-
-        animalMove(animal2);
-        animalHit(animal2);
+//        animalMove(animal);
+//        animalHit(animal);
+//
+//        animalMove(animal2);
+//        animalHit(animal2);
 
         if (obstacleOn == true) {
             for (Obstacle obstacle : obstacles) {
                 obstacleMove(obstacle);
                 obstacleHit(obstacle);
             }
+            for (HealthPickup healthPickup : healthPickups) {
+                healthPickup.y += healthPickup.speed;
+
+                if (healthPickup.y + healthPickup.height > screenY + healthPickup.height) {
+                    healthPickup.speed = random.nextInt(screenY / 42 + screenY / 84);
+                    healthPickup.y = -screenY*randomNum;
+                    healthPickup.x = random.nextInt(screenX - healthPickup.width);
+                }
+                Rect rect = healthPickup.getCollisionShape();
+                if (Rect.intersects(rect, ship.getCollisionShape())) {
+                    score += scoreAmount;
+                    if (health < 3) {
+                        health++;
+                    }
+                    healthPickup.y = -screenY * randomNum;
+                    healthPickup.x = random.nextInt(screenX - healthPickup.width);
+                }
+            }
+            for (Bomb bomb : bombs) {
+                bomb.y += bomb.speed;
+
+                if (bomb.y + bomb.height > screenY + bomb.height) {
+                    bomb.speed = random.nextInt(screenY / 42 + screenY / 84);
+                    bomb.y = -screenY*randomNum1;
+                    bomb.x = random.nextInt(screenX - bomb.width);
+                }
+                Rect rect = bomb.getCollisionShape();
+                if (Rect.intersects(rect, ship.getCollisionShape())) {
+                    health -= 10;
+                    bomb.y = -screenY;
+                }
+            }
+//            for (HealthPickup healthPickup : healthPickups) {
+//
+//                healthPickup.y += healthPickup.speed;
+//
+//                if (healthPickup.y + healthPickup.height > screenY + healthPickup.height) {
+//                    healthPickup.speed = random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert));
+//                    healthPickup.y = (-screenY * randomNum);
+//                    healthPickup.x = random.nextInt(screenX - healthPickup.width);
+//                }
+//                Rect rect = healthPickup.getCollisionShape();
+//                if (Rect.intersects(rect, ship.getCollisionShape())) {
+//                    if (health < 3) {
+//                        health++;
+//                    }
+//                    healthPickup.x = random.nextInt(screenX - healthPickup.width);
+//                    healthPickup.y = -screenY * randomNum;
+//                    score += healthPickup.score;
+//                }
+//            }
+
+//            for (Bomb bomb : bombs) {
+//                bomb.y += bomb.speed;
+//
+//                if (bomb.y + bomb.height > screenY + bomb.height) {
+//                    bomb.speed = random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert));
+//                    bomb.y = -screenY* randomNum;
+//                    bomb.x = random.nextInt(screenX - bomb.width);
+//                }
+//                Rect rect = bomb.getCollisionShape();
+//                if (Rect.intersects(rect, ship.getCollisionShape())) {
+//                    health -= 10;
+//                    bomb.y = -screenY* randomNum;
+//                }
+//            }
         }
     }
     private void draw(){
@@ -144,6 +250,9 @@ public class GameView1 extends SurfaceView implements Runnable {
             canvas.drawBitmap(background2.background, background2.x, background2.y,textPaint);
 
             //Draw Health Bar
+            if(health == 3) {
+                healthPaint.setColor(Color.GREEN);
+            }
             if (health == 2){
                 healthPaint.setColor(Color.YELLOW);
             } else if (health == 1) {
@@ -166,19 +275,28 @@ public class GameView1 extends SurfaceView implements Runnable {
 //                canvas.drawBitmap(animal.getAnimal(), animal.x, animal.y, paint);
 
             //Draw animal
-            canvas.drawBitmap(animal.getAnimal(), animal.getX(), animal.getY(), textPaint);
+          //  canvas.drawBitmap(animal.getAnimal(), animal.getX(), animal.getY(), textPaint);
 
             //Draw ship
             canvas.drawBitmap(ship.getShip(), ship.x, ship.y, textPaint);
 
             if (ship.y < -screenY) {
+
                 getHolder().unlockCanvasAndPost(canvas);
                 sleep();
-                Intent intent = new Intent(context, GameActivity.class);
+                Intent intent = new Intent(context, GameActivity4.class);
                 context.startActivity(intent);
                 ((Activity) context).finish();
                 return;
             }
+          
+            //Draw Health Pickup
+            for (HealthPickup healthPickup : healthPickups)
+                canvas.drawBitmap(healthPickup.getHealthPickup(), healthPickup.x, healthPickup.y, textPaint);
+
+            //Draw Bomb
+            for (Bomb bomb : bombs)
+                canvas.drawBitmap(bomb.getBomb(), bomb.x, bomb.y, textPaint);
 
             //Check game over
             if(isGameOver)
@@ -219,9 +337,9 @@ public class GameView1 extends SurfaceView implements Runnable {
     }
     //obstacle movement and coordinate reset
     private void obstacleMove(Obstacle obstacle) {
-        obstacle.y += obstacle.speed;
+        obstacle.y += obstacle.speed * Speed.Speed;
         if (obstacle.y + obstacle.height > screenY + obstacle.height) {
-            obstacle.speed = random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert));
+            obstacle.speed = (int) (random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert)) * Speed.Speed);
             obstacle.y = -screenY;
             obstacle.x = random.nextInt(screenX - obstacle.width);
         }
@@ -255,12 +373,13 @@ public class GameView1 extends SurfaceView implements Runnable {
 
     private void shipEnter()
     {
-        if (levelWon = false) {
-            if (ship.y != (screenY - (screenY / 14) - ship.height)) {
+        if (levelWon == false)
+        {
+            if (ship.y > (screenY - (screenY / 14) - ship.height)) {
                 ship.y -= 10 * ScreenRatioInvert;
-            } else {
+           } else {
                 obstacleOn = true;
-            }
+          }
         }
     }
         private void sleep(){

@@ -23,12 +23,12 @@ public class Obstacle {
     Random random = new Random();
     Bitmap obstacle;
 
-    Obstacle (Resources res) {
-        Bitmap[] obstacleSprites = new Bitmap[4];
-        obstacleSprites[0] = BitmapFactory.decodeResource(res, R.drawable.brownrockone);
-        obstacleSprites[1] = BitmapFactory.decodeResource(res, R.drawable.brownrocktwo);
-        obstacleSprites[2] = BitmapFactory.decodeResource(res, R.drawable.brownrockthree);
-        obstacleSprites[3] = BitmapFactory.decodeResource(res, R.drawable.brownrockfour);
+    Obstacle (Bitmap[] obstacleSprites) {
+//        Bitmap[] obstacleSprites = new Bitmap[4];
+//        obstacleSprites[0] = BitmapFactory.decodeResource(res, R.drawable.brownrockone);
+//        obstacleSprites[1] = BitmapFactory.decodeResource(res, R.drawable.brownrocktwo);
+//        obstacleSprites[2] = BitmapFactory.decodeResource(res, R.drawable.brownrockthree);
+//        obstacleSprites[3] = BitmapFactory.decodeResource(res, R.drawable.brownrockfour);
 
         // select a random sprite
         int spriteIndex = new Random().nextInt(4);

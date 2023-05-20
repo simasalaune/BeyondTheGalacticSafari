@@ -29,7 +29,14 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        if (Speed.Speed < 0.5)
+        {
+            Speed.Speed = 0.5f;
+        }
     }
+
+
     public void startGame(View view) {
 
         Intent intent = new Intent(this, GameActivity.class);

@@ -1,6 +1,7 @@
 package com.example.beyondthegalacticsafari;
 
 import static com.example.beyondthegalacticsafari.GameView.ScreenRatio;
+import static com.example.beyondthegalacticsafari.GameView.ScreenRatioInvert;
 import static com.example.beyondthegalacticsafari.GameView.screenY;
 
 import android.content.res.Resources;
@@ -8,10 +9,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Bomb {
 
-    public int speed = 25 * screenY/42;
-    int x, y = -screenY, width, height;
+    Random random = new Random();
+    public int speed = random.nextInt((int) ((screenY / 42 ) * ScreenRatioInvert));
+    int x, y, width, height, randomNum;
     Bitmap bomb;
 
     Bomb(Resources res, int number) {
@@ -40,6 +45,8 @@ public class Bomb {
 
         bomb = Bitmap.createScaledBitmap(bomb, width, height, false);
         x = width;
+        randomNum = ThreadLocalRandom.current().nextInt(2, 3);
+        y = -screenY * randomNum;
     }
 
     public Bitmap getBomb()
