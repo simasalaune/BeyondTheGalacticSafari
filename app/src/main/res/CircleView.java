@@ -11,24 +11,19 @@ public class CircleView extends View {
     private int borderColor;
     private int fillColor;
     private Random random;
-
     public CircleView(Context context, Random random) {
         super(context);
         this.random = random;
     }
-
     public void setCircleSize(int circleSize) {
         this.circleSize = circleSize;
     }
-
     public void setBorderColor(int borderColor) {
         this.borderColor = borderColor;
     }
-
     public void setFillColor(int fillColor) {
         this.fillColor = fillColor;
     }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
