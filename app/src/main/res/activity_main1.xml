@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextWord"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layoutCircles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/buttonCountLetters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Count Letters" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter a word"
+        android:inputType="text" />
+
+</RelativeLayout>
